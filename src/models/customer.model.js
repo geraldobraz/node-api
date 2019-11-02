@@ -6,7 +6,7 @@ const user = '';
 const password = '';
 
 
-mongoose.connect(`mongodb://localhost:27017/${database}`);
+mongoose.connect(`mongodb://localhost:27017/${database}`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const CustomerSchema = new mongoose.Schema({
     name: String,
