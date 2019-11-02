@@ -27,4 +27,50 @@ router.post('/customer', (req, res) => {
         });
 });
 
+// Find a customer by email
+router.get('/customer', (req, res) => {
+    if (!req.query.email)
+        return res.status(HttpStatus.BAD_REQUEST).send('Missing URL parameter: email');
+
+
+    CustomerModel.findOne({ email: req.query.email })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
+        })
+});
+
+// Update a custumer
+router.put('/customer', (req, res) => {
+    if (!req.query.email)
+        return res.status(HttpStatus.BAD_REQUEST).send('Missing URL parameter: email');
+
+
+    CustomerModel.findOneAndUpdate({ email: req.query.email }, req.body, { new: true })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
+        })
+});
+
+// Delete a custumer
+router.delete('/customer', (req, res) => {
+    if (!req.query.email)
+        return res.status(HttpStatus.BAD_REQUEST).send('Missing URL parameter: email');
+
+
+    CustomerModel.findOneAndRemove({ email: req.query.email })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
+        })
+});
+
+
 module.exports = router;
